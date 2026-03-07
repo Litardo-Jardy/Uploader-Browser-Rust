@@ -3,8 +3,7 @@ use jsonwebtoken::{encode, Header, EncodingKey};
 use serde::{Deserialize, Serialize};
 use std::time::{SystemTime, UNIX_EPOCH};
 use crate::models::claims::Claims;
-
-const SECRET: &str = "mi_clave_secreta";
+use crate::models::config::SECRET;    
 
 #[derive(Deserialize)]
 struct LoginInput {
@@ -37,7 +36,7 @@ async fn login( Json(body): Json<LoginInput> ) -> Result<Json<LoginResponse>, St
        sub: body.user,
        exp: expiration,
      };
-
+println!("Expiracion generada: {}", expiration);
      let token = encode(
        &Header::default(),
        &claims,
