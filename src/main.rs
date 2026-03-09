@@ -2,11 +2,16 @@ mod models;
 mod routes;
 mod middleware;
 mod helpers;
+mod utils;
+mod errors;
 use axum::{ Router };
 
 #[tokio::main]
 async fn main() {
     let app = Router::new()
+        .merge(routes::edit_folder::routes())
+        .merge(routes::delete_folder::routes())
+        .merge(routes::list_folders::routes())
         .merge(routes::create_folder::routes())
         .merge(routes::auth::routes())
         .merge(routes::user::routes());
