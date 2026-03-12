@@ -1,12 +1,11 @@
 use tokio::fs;
-use std::io;
 use crate::models::config:: BASE_DIR;
+use crate::utils::name_path_validation::name_path_validation;
 
 pub async fn list_folders(path: &str) -> Result<Vec<String>, std::io::Error> {
-   if path.contains("..") {
-        return Err(io::Error::new(io::ErrorKind::InvalidInput, "path inválido"));}
 
-   let route = if path.is_empty() {
+   name_path_validation(path).await?;
+   let route = if path == "*" {
       BASE_DIR.to_string()
      } else {
         format!("{}/{}", BASE_DIR, path)};

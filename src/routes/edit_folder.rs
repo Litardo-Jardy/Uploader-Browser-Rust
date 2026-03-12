@@ -1,4 +1,4 @@
-use axum::{Router, routing::post, Json, http::StatusCode};
+use axum::{Router, routing::post, Json};
 use serde::{Deserialize, Serialize};
 use crate::helpers::edit_folder::edit_folder;
 use crate::errors::api_error::ApiError;

@@ -2,6 +2,7 @@ use axum::{
     http::StatusCode,
     response::{IntoResponse, Response},
 };
+use axum::extract::multipart::MultipartError;
 use std::io;
 
 pub struct ApiError(pub io::Error);
@@ -26,3 +27,8 @@ impl IntoResponse for ApiError {
     }
 }
   
+impl From<MultipartError> for ApiError {
+    fn from(e: MultipartError) -> Self {
+        ApiError(io::Error::new(io::ErrorKind::InvalidInput, e.to_string()))
+    }
+}

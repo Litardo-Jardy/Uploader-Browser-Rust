@@ -1,17 +1,16 @@
 use tokio::fs; 
-use std::io;
 use crate::models::config::BASE_DIR;
+use crate::utils::path_validation::path_exists;
+use crate::utils::path_validation::PathRequirement;
+use crate::utils::name_path_validation::name_path_validation;
 
 pub async fn add_folder(name: &str) -> Result<(), std::io::Error> {
-    match name {
-      n if n.len() <= 2 => return Err(io::Error::new(io::ErrorKind::InvalidInput, "Nombre muy corto")),
-      n if n.starts_with('.') => return Err(io::Error::new(io::ErrorKind::InvalidInput, "El nombre de la carpeta no puede iniciar con '.'")),
-      _ => {}
-    } 
+    name_path_validation(name).await?;
+    let route = format!("{}/{}", BASE_DIR, name);
 
-    let rute = format!("{}/{}", BASE_DIR, name);
+    path_exists(&route, PathRequirement::MustNotExist).await?;
    
-    fs::create_dir_all(rute).await?;
+    fs::create_dir_all(&route).await?;
     Ok(())
 }
 
