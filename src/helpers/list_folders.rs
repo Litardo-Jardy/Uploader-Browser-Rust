@@ -1,14 +1,17 @@
 use tokio::fs;
-use crate::models::config:: BASE_DIR;
+use dotenvy::dotenv;
+use std::env;
 use crate::utils::name_path_validation::name_path_validation;
 
 pub async fn list_folders(path: &str) -> Result<Vec<String>, std::io::Error> {
+   dotenv().ok();
+   let base_dir = env::var("BASE_DIR").expect("Ruta no definida");
 
    name_path_validation(path).await?;
    let route = if path == "*" {
-      BASE_DIR.to_string()
+      base_dir.to_string()
      } else {
-        format!("{}/{}", BASE_DIR, path)};
+        format!("{}/{}", base_dir, path)};
 
    let mut folders = fs::read_dir(&route).await?;
    let mut name_folders = Vec::new();

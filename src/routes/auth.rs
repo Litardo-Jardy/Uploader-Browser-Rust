@@ -3,7 +3,8 @@ use jsonwebtoken::{encode, Header, EncodingKey};
 use serde::{Deserialize, Serialize};
 use std::time::{SystemTime, UNIX_EPOCH};
 use crate::models::claims::Claims;
-use crate::models::config::SECRET;    
+use dotenvy::dotenv;
+use std::env;
 
 #[derive(Deserialize)]
 struct LoginInput {
@@ -22,8 +23,13 @@ pub fn routes() -> Router {
 }
 
 async fn login( Json(body): Json<LoginInput> ) -> Result<Json<LoginResponse>, StatusCode> {
-       
-     if body.user != "admin" || body.pass != "11221" {
+     
+     dotenv().ok();
+     let secret = env::var("SECRET").expect("Secret no definido");
+     let user = env::var("USERR").expect("User no definido");
+     let pass = env::var("PASS").expect("Pass no definida");
+     println!("{}/{}", &user, &pass);
+     if body.user != user || body.pass != pass {
         return Err(StatusCode::UNAUTHORIZED); 
      }
 
@@ -36,11 +42,11 @@ async fn login( Json(body): Json<LoginInput> ) -> Result<Json<LoginResponse>, St
        sub: body.user,
        exp: expiration,
      };
-println!("Expiracion generada: {}", expiration);
+
      let token = encode(
        &Header::default(),
        &claims,
-       &EncodingKey::from_secret(SECRET.as_bytes())
+       &EncodingKey::from_secret(&secret.as_bytes())
      ).map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
 
      Ok(Json(LoginResponse { token }))
