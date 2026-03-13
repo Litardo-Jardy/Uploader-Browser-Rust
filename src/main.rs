@@ -13,8 +13,7 @@ async fn main() {
         .merge(routes::delete_folder::routes())
         .merge(routes::list_folders::routes())
         .merge(routes::create_folder::routes())
-        .merge(routes::auth::routes())
-        .merge(routes::user::routes());
+        .merge(routes::auth::routes());
     
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000")
         .await

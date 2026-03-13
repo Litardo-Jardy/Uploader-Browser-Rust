@@ -5,7 +5,8 @@ use axum::{
 use async_trait::async_trait;
 use jsonwebtoken::{decode, DecodingKey, Validation};
 use crate::models::claims::Claims;
-use crate::models::config::SECRET;
+use dotenvy::dotenv;
+use std::env;
 
 pub struct UsuarioAutenticado {
     pub usuario: String,
@@ -16,13 +17,16 @@ impl<S> FromRequestParts<S> for UsuarioAutenticado
 where
     S: Send + Sync,
 {
+
     type Rejection = StatusCode;
 
     async fn from_request_parts(
         parts: &mut Parts,
         _state: &S,
     ) -> Result<Self, StatusCode> {
-
+   
+        dotenv().ok();
+        let secret = env::var("SECRET").expect("Secret no definido");
         let auth_header = parts.headers
             .get("Authorization")
             .and_then(|v| v.to_str().ok())
@@ -35,11 +39,10 @@ where
  
 let data = decode::<Claims>(
     token,
-    &DecodingKey::from_secret(SECRET.as_bytes()),
+    &DecodingKey::from_secret(secret.as_bytes()),
     &Validation::default()
-).map_err(|e| {
-    println!("Error decodificando token: {}", e);  // ver el error exacto
-    StatusCode::UNAUTHORIZED
+).map_err(|_| {
+        StatusCode::UNAUTHORIZED
 })?;
 
         Ok(UsuarioAutenticado {

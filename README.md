@@ -12,7 +12,7 @@ La idea de este proyecto es desarrollar un backend que interactúe directamente 
 
 ## Informacion tecnica
 
-Puedes encontrar mas informacin del proyecto sobre la arquitectura, manejo de errores, el manejo de archivos, etc en mis posts de [Linkedin]()
+Puedes encontrar mas informacin del proyecto sobre la arquitectura, manejo de errores, el manejo de archivos, etc en mis posts de [Linkedin](https://www.linkedin.com/posts/jardy-litardo-vera-209a36219_estoy-construyendo-una-api-rest-para-la-gestion-activity-7438075293967413248-BUxn?utm_source=share&utm_medium=member_desktop&rcm=ACoAADcl5KkBgd0pPFb3GBmDmrocdAmOv4mv63k)
 
 # Instalación y ejecución
 
@@ -30,7 +30,17 @@ Puedes encontrar mas informacin del proyecto sobre la arquitectura, manejo de er
 
 ```
 
-### 3. Ejecucion del proyecto
+### 3. Crear .env apartir de .env.example para las variables de entorno
+```bash
+
+   BASE_DIR=la-ruta-sobre-la-que-se-va-a-trabajar
+   SECRET=tu-firma-para-el-token
+   USERR=tu-usuario-para-login
+   PASS=tu-contraseña-para-login
+
+```
+
+### 4. Ejecucion del proyecto
 ```bash
 
    cargo run
