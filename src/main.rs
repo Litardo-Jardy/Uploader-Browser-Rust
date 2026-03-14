@@ -8,6 +8,7 @@ mod errors; use axum::{ Router };
 #[tokio::main]
 async fn main() {
     let app = Router::new()
+    .merge(routes::delete_file::routes())
         .merge(routes::upload_file::routes())
         .merge(routes::edit_folder::routes())
         .merge(routes::delete_folder::routes())
