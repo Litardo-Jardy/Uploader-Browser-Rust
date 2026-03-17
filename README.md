@@ -40,7 +40,7 @@ Puedes encontrar mas informacin del proyecto sobre la arquitectura, manejo de er
 
 ```
 
-### 4. Ejecucion del proyecto
+### 4. Ejecutar del proyecto
 ```bash
 
    cargo run
