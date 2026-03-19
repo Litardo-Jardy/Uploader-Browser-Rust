@@ -5,7 +5,7 @@ use crate::errors::api_error::ApiError;
 
 #[derive(Deserialize)]
 struct FolderInput {
-  name: String,
+  path: String,
 }
 
 #[derive(Serialize)]
@@ -22,7 +22,7 @@ async fn handle_delete_file(
     Json(body): Json<FolderInput>
 ) -> Result<Json<FolderResponse>,ApiError> {
  
-   delete_file(&body.name).await?;
+   delete_file(&body.path).await?;
    Ok(Json(FolderResponse {
         message_status: "Archivo eliminada con éxito".to_string()
     }))

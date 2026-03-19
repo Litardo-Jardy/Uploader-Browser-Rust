@@ -5,8 +5,8 @@ use crate::errors::api_error::ApiError;
 
 #[derive(Deserialize)]
 struct FolderInput {
-  name: String,
-  new_name: String,
+  path: String,
+  new_path: String,
 }
 
 #[derive(Serialize)]
@@ -21,9 +21,9 @@ pub fn routes() -> Router {
 
 async fn handle_edit_folder( Json(body): Json<FolderInput> ) -> Result<Json<FolderResponse>, ApiError> {
 
-   edit_folder(&body.name, &body.new_name).await?;
+   edit_folder(&body.path, &body.new_path).await?;
 
-   let message = format!("Carpeta '{}' se edito con existo a '{}'.",&body.name, &body.new_name).to_string();
+   let message = format!("Carpeta '{}' se edito con existo a '{}'.",&body.path, &body.new_path).to_string();
    Ok(Json(FolderResponse { 
          message_status: message }))
 }

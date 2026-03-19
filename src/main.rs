@@ -15,13 +15,14 @@ async fn main() {
 
     let app = Router::new()
     .merge(routes::delete_file::routes())
+        .merge(routes::list_file::routes())
         .merge(routes::upload_file::routes())
         .merge(routes::edit_folder::routes())
         .merge(routes::delete_folder::routes())
         .merge(routes::list_folders::routes())
         .merge(routes::create_folder::routes())
         .merge(routes::auth::routes())
-        .nest_service("/files", ServeDir::new(base_dir));
+        .nest_service("", ServeDir::new(base_dir));
     
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000")
         .await

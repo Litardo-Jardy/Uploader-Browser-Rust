@@ -7,7 +7,7 @@ use crate::errors::api_error::ApiError;
 
 #[derive(Deserialize)]
 struct FolderInput {
-  name: String,
+  path: String,
 }
 
 #[derive(Serialize)]
@@ -24,7 +24,7 @@ pub fn routes() -> Router {
 // temas de practicas;
 async fn handle_create_folder( Json(body): Json<FolderInput> ) -> Result<Json<FolderResponse>, ApiError> {
 
-  add_folder(&body.name).await?;
+  add_folder(&body.path).await?;
   Ok(Json(FolderResponse { message_status: ("Carpeta creada con existo.".to_string()) }))
 
 } 
