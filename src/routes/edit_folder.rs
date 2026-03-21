@@ -16,7 +16,7 @@ struct FolderResponse {
 
 pub fn routes() -> Router {
    Router::new()
-    .route("/edit_folder", post(handle_edit_folder))
+    .route("/edit_element", post(handle_edit_folder))
 }
 
 async fn handle_edit_folder( Json(body): Json<FolderInput> ) -> Result<Json<FolderResponse>, ApiError> {

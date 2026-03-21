@@ -1,4 +1,4 @@
-use axum::{Json, Router, routing::{post}};
+use axum::{Json, Router, routing::get, extract::Query};
 use serde::{Deserialize, Serialize};
 use crate::helpers::list_folders::list_folders;
 use crate::helpers::list_folders::FolderInfo;
@@ -16,12 +16,12 @@ struct FolderResponse{
 
 pub fn routes() -> Router {
     Router::new()
-        .route("/list_folders", post(handle_list_folders))
+        .route("/list_folders", get(handle_list_folders))
 }
 
-async fn handle_list_folders( Json(body): Json<FolderInput> ) -> Result<Json<FolderResponse>, ApiError> { 
+async fn handle_list_folders( Query(params): Query<FolderInput> ) -> Result<Json<FolderResponse>, ApiError> { 
 
-    let folders = list_folders(&body.path).await?;
+    let folders = list_folders(&params.path).await?;
     Ok(Json(FolderResponse { folders }))
 
 }
