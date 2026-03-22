@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::helpers::list_folders::list_folders;
 use crate::helpers::list_folders::FolderInfo;
 use crate::errors::api_error::ApiError;
+use crate::middleware::auth::UsuarioAutenticado;
 
 #[derive(Deserialize)]
 struct FolderInput{
@@ -19,7 +20,9 @@ pub fn routes() -> Router {
         .route("/list_folders", get(handle_list_folders))
 }
 
-async fn handle_list_folders( Query(params): Query<FolderInput> ) -> Result<Json<FolderResponse>, ApiError> { 
+async fn handle_list_folders( 
+    _user: UsuarioAutenticado, 
+    Query(params): Query<FolderInput> ) -> Result<Json<FolderResponse>, ApiError> { 
 
     let folders = list_folders(&params.path).await?;
     Ok(Json(FolderResponse { folders }))

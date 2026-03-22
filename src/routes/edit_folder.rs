@@ -2,6 +2,7 @@ use axum::{Router, routing::post, Json};
 use serde::{Deserialize, Serialize};
 use crate::helpers::edit_folder::edit_folder;
 use crate::errors::api_error::ApiError;
+use crate::middleware::auth::UsuarioAutenticado;
 
 #[derive(Deserialize)]
 struct FolderInput {
@@ -19,7 +20,7 @@ pub fn routes() -> Router {
     .route("/edit_element", post(handle_edit_folder))
 }
 
-async fn handle_edit_folder( Json(body): Json<FolderInput> ) -> Result<Json<FolderResponse>, ApiError> {
+async fn handle_edit_folder( _user: UsuarioAutenticado, Json(body): Json<FolderInput> ) -> Result<Json<FolderResponse>, ApiError> {
 
    edit_folder(&body.path, &body.new_path).await?;
 

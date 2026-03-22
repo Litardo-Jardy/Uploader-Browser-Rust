@@ -47,6 +47,76 @@ Puedes encontrar mas informacin del proyecto sobre la arquitectura, manejo de er
 
 ```
 
+## Endpoints
+
+### Login:
+
+```bash
+      curl -s -X POST http://localhost:3000/login \
+         -H "Content-Type: application/json" \
+         -d '{"user": "", "pass": ""}'
+```
+
+### Listar folders (Autenticado):
+
+```bash
+      curl -v http://localhost:3000/list_folders?path="*" \
+          -H "Authorization: Bearer "
+```
+
+### Listar files (Autenticado):
+
+
+```bash
+      curl -v http://localhost:3000/list_files?path="*" \
+           -H "Authorization: Bearer "
+```
+
+### Eliminar folder (Autenticado):
+
+```bash
+      curl -X POST http://localhost:3000/delete_folder \
+           -H "Content-Type: application/json" \
+           -H "Authorization: Bearer " \
+           -d '{"path": ""}'
+```
+
+### Eliminar file (Autenticado):
+
+```bash
+       curl -X POST http://localhost:3000/delete_file \
+           -H "Content-Type: application/json" \
+           -H "Authorization: Bearer " \
+           -d '{"path": ""}'
+```
+
+### Edicion (Autenticado):
+
+```bash
+        curl -v -X POST http://localhost:3000/edit_element \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer " \
+            -d '{"path": "", "new_path": ""}'
+```
+
+### Crear folder (Autenticado):
+
+```bash
+        curl -X POST http://localhost:3000/create_folder \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer " \
+            -d '{"path": ""}'
+```
+
+### Subir archivo (Autenticado):
+
+```bash
+        curl -X POST http://localhost:3000/upload_file \
+             -H "Authorization: Bearer " \
+             -F "name=" \
+             -F "route=" \
+             -F "file=@/"
+```
 # Autor
 
 - Jardy Litardo [Litardo-Jardy](https://github.com/Litardo-Jardy)

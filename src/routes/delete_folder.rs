@@ -2,6 +2,7 @@ use axum::{Router, routing::post, Json};
 use serde::{Deserialize, Serialize};
 use crate::helpers::delete_folder::delete_folder;
 use crate::errors::api_error::ApiError;
+use crate::middleware::auth::UsuarioAutenticado;
 
 #[derive(Deserialize)]
 struct FolderInput {
@@ -19,6 +20,7 @@ pub fn routes() -> Router {
 }
 
 async fn handle_delete_folder(
+    _user: UsuarioAutenticado,
     Json(body): Json<FolderInput>
 ) -> Result<Json<FolderResponse>,ApiError> {
 

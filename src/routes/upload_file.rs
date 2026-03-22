@@ -3,6 +3,7 @@ use serde::{ Serialize };
 use crate::helpers::upload_file::upload_file;
 use crate::errors::api_error::ApiError;
 use axum::extract::Multipart;
+use crate::middleware::auth::UsuarioAutenticado;
 
 #[derive(Serialize)]
 struct DataResponde {
@@ -15,6 +16,7 @@ pub fn routes() -> Router {
 }
 
 async fn handle_uploader_file(
+    _user: UsuarioAutenticado,
     mut multipart: Multipart
 ) -> Result<Json<DataResponde>, ApiError> {
 

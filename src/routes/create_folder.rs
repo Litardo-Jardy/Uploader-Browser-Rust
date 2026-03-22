@@ -2,8 +2,7 @@ use axum::{Router, routing::post, Json};
 use serde::{Deserialize, Serialize};
 use crate::helpers::create_folder::add_folder;
 use crate::errors::api_error::ApiError;
-//Import de la validacion del token
-//use crate::middleware::auth::UsuarioAutenticado;
+use crate::middleware::auth::UsuarioAutenticado;
 
 #[derive(Deserialize)]
 struct FolderInput {
@@ -20,9 +19,9 @@ pub fn routes() -> Router {
        .route("/create_folder", post(handle_create_folder))
 }
 
-// NO olvidar que aqui debe ir la validacion del token "_user: UsuarioAutenticado" se a quitado por
-// temas de practicas;
-async fn handle_create_folder( Json(body): Json<FolderInput> ) -> Result<Json<FolderResponse>, ApiError> {
+async fn handle_create_folder(
+    _user: UsuarioAutenticado, 
+    Json(body): Json<FolderInput> ) -> Result<Json<FolderResponse>, ApiError> {
 
   add_folder(&body.path).await?;
   Ok(Json(FolderResponse { message_status: ("Carpeta creada con existo.".to_string()) }))

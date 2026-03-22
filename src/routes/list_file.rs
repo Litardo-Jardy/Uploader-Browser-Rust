@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::helpers::list_file::list_file;
 use crate::helpers::list_file::FileInfo;
 use crate::errors::api_error::ApiError;
+use crate::middleware::auth::UsuarioAutenticado;
 
 #[derive(Deserialize)]
 struct FileInput {
@@ -20,6 +21,7 @@ pub fn routes() -> Router {
 }
 
 async fn handle_list_folders(
+    _user: UsuarioAutenticado,
     Query(params): Query<FileInput>
 ) -> Result<Json<FilesResponse>, ApiError> {
     let files = list_file(&params.path).await?;
