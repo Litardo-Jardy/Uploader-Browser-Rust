@@ -7,9 +7,16 @@ mod errors; use axum::{ Router };
 use tower_http::services::ServeDir;
 use dotenvy::dotenv;
 use std::env;
+use tower_http::cors::{CorsLayer, Any};
+use axum::http::{Method, HeaderValue};
 
 #[tokio::main]
 async fn main() {
+
+    let cors = CorsLayer::new()
+        .allow_origin("http://localhost:5173".parse::<HeaderValue>().unwrap())
+        .allow_methods([Method::GET, Method::POST, Method::DELETE])
+        .allow_headers(Any);
     dotenv().ok();
     let base_dir = env::var("BASE_DIR").expect("Ruta no definida");
 
@@ -22,6 +29,7 @@ async fn main() {
         .merge(routes::list_folders::routes())
         .merge(routes::create_folder::routes())
         .merge(routes::auth::routes())
+        .layer(cors)
         .nest_service("", ServeDir::new(base_dir));
     
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000")

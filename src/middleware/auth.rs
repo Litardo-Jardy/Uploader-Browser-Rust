@@ -35,15 +35,13 @@ where
         let token = auth_header
             .strip_prefix("Bearer ")
             .ok_or(StatusCode::UNAUTHORIZED)?;
-
  
-let data = decode::<Claims>(
-    token,
-    &DecodingKey::from_secret(secret.as_bytes()),
-    &Validation::default()
-).map_err(|_| {
-        StatusCode::UNAUTHORIZED
-})?;
+        let data = decode::<Claims>(
+           token,
+           &DecodingKey::from_secret(secret.as_bytes()),
+           &Validation::default()).map_err(|_| {
+                StatusCode::UNAUTHORIZED
+            })?;
 
         Ok(UsuarioAutenticado {
             usuario: data.claims.sub

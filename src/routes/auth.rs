@@ -15,6 +15,7 @@ struct LoginInput {
 #[derive(Serialize)]
 struct LoginResponse{
   token: String,
+  user_name: String,
 }
 
 pub fn routes() -> Router {
@@ -28,7 +29,6 @@ async fn login( Json(body): Json<LoginInput> ) -> Result<Json<LoginResponse>, St
      let secret = env::var("SECRET").expect("Secret no definido");
      let user = env::var("USERR").expect("User no definido");
      let pass = env::var("PASS").expect("Pass no definida");
-     println!("{}/{}", &user, &pass);
      if body.user != user || body.pass != pass {
         return Err(StatusCode::UNAUTHORIZED); 
      }
@@ -49,5 +49,6 @@ async fn login( Json(body): Json<LoginInput> ) -> Result<Json<LoginResponse>, St
        &EncodingKey::from_secret(&secret.as_bytes())
      ).map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
 
-     Ok(Json(LoginResponse { token }))
+
+     Ok(Json(LoginResponse { token, user_name: user }))
 }
