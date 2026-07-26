@@ -23,9 +23,9 @@ pub async fn upload_file(
     }
     let route_file = format!("{}{}", base_dir, _route);
  
-    path_exists(&route_file, PathRequirement::MustExist).await?;
+    path_exists(&route_file, PathRequirement::MustExist, _name).await?;
     let route_file = format!("{}{}/{}", base_dir, _route, _name);
-    path_exists(&route_file, PathRequirement::MustNotExist).await?;
+    path_exists(&route_file, PathRequirement::MustNotExist, _name).await?;
 
     let mut file = fs::File::create(&route_file).await?;
     file.write_all(&_file).await?;

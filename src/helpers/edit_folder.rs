@@ -12,7 +12,7 @@ pub async fn edit_folder(name: &str, new_name: &str) -> Result<(), std::io::Erro
      name_path_validation(name).await?;
       
      let route = format!("{}/{}", &base_dir, name);
-     path_exists(&route, PathRequirement::MustExist).await?;
+     path_exists(&route, PathRequirement::MustExist, name).await?;
 
      let new_rute = format!("{}/{}", &base_dir, new_name); 
 

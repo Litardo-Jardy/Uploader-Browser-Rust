@@ -11,7 +11,7 @@ pub async fn add_folder(name: &str) -> Result<(), std::io::Error> {
     name_path_validation(name).await?;
     let route = format!("{}/{}", &base_dir, name);
 
-    path_exists(&route, PathRequirement::MustNotExist).await?;
+    path_exists(&route, PathRequirement::MustNotExist, name).await?;
    
     fs::create_dir_all(&route).await?;
     Ok(())

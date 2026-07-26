@@ -5,7 +5,7 @@ pub enum PathRequirement {
     MustNotExist,
 }
 
-pub async fn path_exists(route: &str, requirement: PathRequirement) -> Result<(), io::Error> {
+pub async fn path_exists(route: &str, requirement: PathRequirement, name: &str) -> Result<(), io::Error> {
 
     let exists = Path::new(route).exists();
 
@@ -13,14 +13,14 @@ pub async fn path_exists(route: &str, requirement: PathRequirement) -> Result<()
         PathRequirement::MustExist if !exists => {
             Err(io::Error::new(
                 io::ErrorKind::NotFound,
-                format!("La ruta {} no existe", route),
+                "La ruta espesificada no existe"
             ))
         }
 
         PathRequirement::MustNotExist if exists => {
             Err(io::Error::new(
                 io::ErrorKind::AlreadyExists,
-                format!("La ruta {} ya existe", route),
+                format!("Ya existe un archivo '{}' en el directorio actual", name),
             ))
         }
 

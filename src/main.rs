@@ -9,12 +9,13 @@ use dotenvy::dotenv;
 use std::env;
 use tower_http::cors::{CorsLayer, Any};
 use axum::http::{Method, HeaderValue};
+use axum::extract::DefaultBodyLimit;
 
 #[tokio::main]
 async fn main() {
 
     let cors = CorsLayer::new()
-        .allow_origin("http://localhost:5173".parse::<HeaderValue>().unwrap())
+        .allow_origin(Any)
         .allow_methods([Method::GET, Method::POST, Method::DELETE])
         .allow_headers(Any);
     dotenv().ok();
@@ -29,6 +30,7 @@ async fn main() {
         .merge(routes::list_folders::routes())
         .merge(routes::create_folder::routes())
         .merge(routes::auth::routes())
+        .layer(DefaultBodyLimit::max(5 * 1024 * 1024 * 1024))
         .layer(cors)
         .nest_service("", ServeDir::new(base_dir));
     
