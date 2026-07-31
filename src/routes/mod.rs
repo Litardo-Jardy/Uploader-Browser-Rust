@@ -6,3 +6,4 @@ pub mod delete_folder;
 pub mod edit_folder;
 pub mod upload_file;
 pub mod delete_file;
+pub mod verify_token;

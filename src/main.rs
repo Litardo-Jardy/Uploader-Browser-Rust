@@ -8,7 +8,7 @@ use tower_http::services::ServeDir;
 use dotenvy::dotenv;
 use std::env;
 use tower_http::cors::{CorsLayer, Any};
-use axum::http::{Method, HeaderValue};
+use axum::http::{ Method };
 use axum::extract::DefaultBodyLimit;
 
 #[tokio::main]
@@ -30,6 +30,7 @@ async fn main() {
         .merge(routes::list_folders::routes())
         .merge(routes::create_folder::routes())
         .merge(routes::auth::routes())
+        .merge(routes::verify_token::routes())
         .layer(DefaultBodyLimit::max(5 * 1024 * 1024 * 1024))
         .layer(cors)
         .nest_service("", ServeDir::new(base_dir));
