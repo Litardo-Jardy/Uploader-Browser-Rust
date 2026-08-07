@@ -1,16 +1,20 @@
 use tokio::fs;
 use dotenvy::dotenv;
 use std::env;
-use serde::{ Serialize };
+use serde::{ Serialize, Deserialize };
 use crate::utils::name_path_validation::name_path_validation;
+
+#[derive(Deserialize)]
+struct FolderMetadata {
+    id: String,}
 
 #[derive(Serialize)]
 pub struct FolderInfo {
+    id: String,
     name: String,
     size: u64,
     element_count: u32,
-    path: String
-}
+    path: String}
 
 pub async fn list_folders(path: &str) -> Result<Vec<FolderInfo>, std::io::Error> {
     dotenv().ok();
@@ -32,6 +36,14 @@ pub async fn list_folders(path: &str) -> Result<Vec<FolderInfo>, std::io::Error>
         if metadata.is_dir() {
             let nombre = folder.file_name().to_string_lossy().to_string();
 
+            let metadata_path = folder.path().join(".metadata.json");
+            let id = if let Ok(content) = fs::read_to_string(&metadata_path).await {
+                     serde_json::from_str::<FolderMetadata>(&content)
+                     .map(|m| m.id)
+                     .unwrap_or_default()
+            } else {
+              String::new()};
+
             let mut size: u64 = 0;
             let mut element_count: u32 = 0;
             let mut entradas = fs::read_dir(folder.path()).await?;
@@ -43,6 +55,7 @@ pub async fn list_folders(path: &str) -> Result<Vec<FolderInfo>, std::io::Error>
             }
 
             name_folders.push(FolderInfo { 
+                id,
                 name: nombre, 
                 size,
                 element_count,
