@@ -2,35 +2,36 @@
 🦀 Uploader-Browser - API-REST
 </div>
 
-## Descripcion 
+## Description:
 
 Este proyecto nace con el objetivo de facilitar el proceso de compartir archivos entre un dispositivo móvil y una computadora de una forma más rápida, eficiente y personalizada, sin depender de aplicaciones de terceros.
+
 Actualmente existen varias formas de transferir archivos, como el uso de aplicaciones de mensajería (por ejemplo WhatsApp). Sin embargo, estas soluciones presentan varias limitaciones. En primer lugar, suelen tener restricciones en el 
 tamaño o tipo de archivo que se puede enviar. En segundo lugar, los archivos terminan almacenados de forma poco organizada cuando llegan al computador, lo que obliga a dedicar tiempo adicional para ordenarlos. Finalmente, también existe la preocupación por la privacidad al depender de servicios externos.
 La idea de este proyecto es desarrollar un backend que interactúe directamente con el sistema de archivos del servidor y permita gestionar archivos y carpetas de forma estructurada. Este backend expone una API REST que posteriormente será consumida por un frontend desarrollado en React.js, el cual proporcionará una interfaz amigable para subir, organizar y gestionar archivos de manera sencilla.
 
 
-## Informacion tecnica
+## Tech info:
 
-Puedes encontrar mas informacin del proyecto sobre la arquitectura, manejo de errores, el manejo de archivos, etc en mis posts de [Linkedin](https://www.linkedin.com/posts/jardy-litardo-vera-209a36219_estoy-construyendo-una-api-rest-para-la-gestion-activity-7438075293967413248-BUxn?utm_source=share&utm_medium=member_desktop&rcm=ACoAADcl5KkBgd0pPFb3GBmDmrocdAmOv4mv63k)
+You can find more information about this project, such as the architecture, error management and file management used it's in my LinkedIn posts [Linkedin](https://www.linkedin.com/posts/jardy-litardo-vera-209a36219_estoy-construyendo-una-api-rest-para-la-gestion-activity-7438075293967413248-BUxn?utm_source=share&utm_medium=member_desktop&rcm=ACoAADcl5KkBgd0pPFb3GBmDmrocdAmOv4mv63k)
 
-# Instalación y ejecución
+## Installation & Execution:
 
-### 1. Clonar el repositorio  
+### 1. Clone repository
 ```bash
 
    https://github.com/Litardo-Jardy/Uploader-Browser-Rust.git
 
 ```
 
-### 2. Restaurar dependencias
+### 2. Build dependencies
 ```bash
 
    cargo build
 
 ```
 
-### 3. Crear .env apartir de .env.example para las variables de entorno
+### 3. Create .env file from .env.example to store environment variables
 ```bash
 
    BASE_DIR=la-ruta-sobre-la-que-se-va-a-trabajar
@@ -40,14 +41,14 @@ Puedes encontrar mas informacin del proyecto sobre la arquitectura, manejo de er
 
 ```
 
-### 4. Ejecutar del proyecto
+### 4. Execute project
 ```bash
 
    cargo run
 
 ```
 
-## Endpoints
+## Endpoints:
 
 ### Login:
 
@@ -57,14 +58,14 @@ Puedes encontrar mas informacin del proyecto sobre la arquitectura, manejo de er
          -d '{"user": "", "pass": ""}'
 ```
 
-### Listar folders (Autenticado):
+### List folders (Authenticate):
 
 ```bash
       curl -v http://localhost:3000/list_folders?path="*" \
           -H "Authorization: Bearer "
 ```
 
-### Listar files (Autenticado):
+### List files (Authenticate):
 
 
 ```bash
@@ -72,7 +73,7 @@ Puedes encontrar mas informacin del proyecto sobre la arquitectura, manejo de er
            -H "Authorization: Bearer "
 ```
 
-### Eliminar folder (Autenticado):
+### Delete folder (Authenticate):
 
 ```bash
       curl -X POST http://localhost:3000/delete_folder \
@@ -81,7 +82,7 @@ Puedes encontrar mas informacin del proyecto sobre la arquitectura, manejo de er
            -d '{"path": ""}'
 ```
 
-### Eliminar file (Autenticado):
+### Delete file (Authenticate):
 
 ```bash
        curl -X POST http://localhost:3000/delete_file \
@@ -90,7 +91,7 @@ Puedes encontrar mas informacin del proyecto sobre la arquitectura, manejo de er
            -d '{"path": ""}'
 ```
 
-### Edicion (Autenticado):
+### Edit File/Folder (Authenticate):
 
 ```bash
         curl -v -X POST http://localhost:3000/edit_element \
@@ -99,7 +100,7 @@ Puedes encontrar mas informacin del proyecto sobre la arquitectura, manejo de er
             -d '{"path": "", "new_path": ""}'
 ```
 
-### Crear folder (Autenticado):
+### Create folder (Authenticate):
 
 ```bash
         curl -X POST http://localhost:3000/create_folder \
@@ -108,7 +109,7 @@ Puedes encontrar mas informacin del proyecto sobre la arquitectura, manejo de er
             -d '{"path": ""}'
 ```
 
-### Subir archivo (Autenticado):
+### Upload File (Authenticate):
 
 ```bash
         curl -X POST http://localhost:3000/upload_file \
@@ -117,6 +118,6 @@ Puedes encontrar mas informacin del proyecto sobre la arquitectura, manejo de er
              -F "route=" \
              -F "file=@/"
 ```
-# Autor
+# Author:
 
 - Jardy Litardo [Litardo-Jardy](https://github.com/Litardo-Jardy)
