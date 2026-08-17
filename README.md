@@ -4,11 +4,11 @@
 
 ## Description:
 
-Este proyecto nace con el objetivo de facilitar el proceso de compartir archivos entre un dispositivo móvil y una computadora de una forma más rápida, eficiente y personalizada, sin depender de aplicaciones de terceros.
+This project was created to make it easier, faster, and more efficient to share files between a mobile device and a computer, without relying on third-party apps.
 
-Actualmente existen varias formas de transferir archivos, como el uso de aplicaciones de mensajería (por ejemplo WhatsApp). Sin embargo, estas soluciones presentan varias limitaciones. En primer lugar, suelen tener restricciones en el 
-tamaño o tipo de archivo que se puede enviar. En segundo lugar, los archivos terminan almacenados de forma poco organizada cuando llegan al computador, lo que obliga a dedicar tiempo adicional para ordenarlos. Finalmente, también existe la preocupación por la privacidad al depender de servicios externos.
-La idea de este proyecto es desarrollar un backend que interactúe directamente con el sistema de archivos del servidor y permita gestionar archivos y carpetas de forma estructurada. Este backend expone una API REST que posteriormente será consumida por un frontend desarrollado en React.js, el cual proporcionará una interfaz amigable para subir, organizar y gestionar archivos de manera sencilla.
+There are already several ways to transfer files, such as messaging apps like WhatsApp — but these come with real limitations. For one, they often restrict file size or type. On top of that, files tend to arrive on the computer in a disorganized way, forcing users to spend extra time sorting them out. And finally, there's the privacy concern that comes with depending on external services.
+
+The goal of this project is to build a backend that interacts directly with the server's file system, allowing files and folders to be managed in a structured way. This backend exposes a REST API, which will later be consumed by a React.js frontend that provides a clean, user-friendly interface for uploading, organizing, and managing files.
 
 
 ## Tech info:
